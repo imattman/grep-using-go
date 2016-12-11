@@ -18,32 +18,33 @@ The project starts with a base implementation and gradually adds features throug
 
 The resulting binary executable is to be named `gogrep`.
 
+Usage:
+
+    gogrep [FLAGS] PATTERN [[file1] [file2] [file3] ...]
+
 `gogrep` should mirror the behavior of regular `grep` to the extent which features are copied. For example, `gogrep` should support matching content from files specified as command line arguments or from STDIN if no file arguments are supplied.
 
-    gogrep PATTERN [[file1] [file2] [file3] ...]
-
 `gogrep` should exit with `0` status if at least one line match is made, otherwise exit with `1`.
-
 
 
 **The following flags are to be supported:**
 
     -h    Show help/usage
 
-    -H    Prints the file name followed by a ':' and then the matching content.  This is default
-          behavior is matches are performed against more than one file.
+    -H    Prints the file name followed by a ':' and then the matching content.  This is
+          the default behavior is matches are performed against more than one file.
 
-    -n    Prints the line number of the match followed by a ':' and then the matching content
+    -n    Prints the line number of the match followed by a ':' and then the matching content.
           If the file name is also printed, the line number information is printed after
           the formatted file name.
 
-    -c    Prints the count of matching lines, but not the matching content lines.
+    -c    Prints the count of matching lines, but not the matching content.
 
-    -l    Prints only the file name if the file contains a match. Does not print matching lines.
+    -l    Prints only the file name if the file contains a match. Does not print matching content.
 
     -v    Inverts the match selection.  Content lines that do not match the PATTERN are selected.
 
-    -q    Quiet mode.  Does not print any output.  Only the exit code is set.
+    -q    Quiet mode; does not print any output.  Only the exit code is set.
 
 
 **Optional flags**
