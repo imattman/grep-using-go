@@ -28,6 +28,12 @@ func TestPrintMatchingLines(t *testing.T) {
 			matchNo:  []string{"One", "two", "red", "blue", "ONE", "TWO", "RED", "BLUE"},
 		},
 		{
+			pattern:  " ", // space expected in all lines with text
+			file:     "testdata/fish.txt",
+			matchYes: []string{"One", "two", "red", "blue", "ONE", "TWO", "RED", "BLUE"},
+			matchNo:  []string{},
+		},
+		{
 			pattern:  " ",
 			file:     "testdata/empty.txt",
 			matchYes: []string{},
@@ -37,7 +43,7 @@ func TestPrintMatchingLines(t *testing.T) {
 
 	for _, test := range tests {
 		capOut, capErr := captureStdoutStderr(func() {
-			printMatchingLines(test.pattern, "testdata/fish.txt")
+			printMatchingLines(test.pattern, test.file)
 		}, t)
 
 		for _, exp := range test.matchYes {
