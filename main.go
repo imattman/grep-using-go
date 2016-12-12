@@ -10,11 +10,7 @@ import (
 
 func main() {
 	if len(os.Args) < 3 {
-		fmt.Fprintf(os.Stderr, "Usage: %s <pattern> <file>\n", os.Args[0])
-		// TODO: figure out why stderr isn't flushing with fmt.Errorf()
-		// fmt.Errorf("Usage: %s <pattern> <file>\n", os.Args[0])
-		// os.Stderr.Sync()
-		os.Exit(2)
+		fatal(2, "Usage: %s <pattern> <file>\n", os.Args[0])
 	}
 
 	pat := os.Args[1]
@@ -22,9 +18,13 @@ func main() {
 
 	err := printMatchingLines(pat, file)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		fatal(2, err.Error())
 	}
+}
+
+func fatal(exitVal int, msg string, args ...interface{}) {
+	fmt.Fprintf(os.Stderr, msg, args...)
+	os.Exit(exitVal)
 }
 
 func printMatchingLines(pat string, file string) error {
