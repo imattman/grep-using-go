@@ -16,9 +16,15 @@ func main() {
 	pat := os.Args[1]
 	file := os.Args[2]
 
-	err := printMatchingLines(pat, file)
+	cnt, err := printMatchingLines(pat, file)
 	if err != nil {
 		fatal(2, err.Error())
+	}
+
+	if cnt > 0 {
+		os.Exit(0)
+	} else {
+		os.Exit(1)
 	}
 }
 
@@ -27,23 +33,25 @@ func fatal(exitVal int, msg string, args ...interface{}) {
 	os.Exit(exitVal)
 }
 
-func printMatchingLines(pat string, file string) error {
+func printMatchingLines(pat string, file string) (int, error) {
 	f, err := os.Open(file)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	defer f.Close()
 
+	matchCnt := 0
 	scan := bufio.NewScanner(bufio.NewReader(f))
 	for scan.Scan() {
 		line := scan.Text()
 		if strings.Contains(line, pat) {
 			fmt.Println(line)
+			matchCnt++
 		}
 	}
 	if scan.Err() != nil {
-		return scan.Err()
+		return matchCnt, scan.Err()
 	}
 
-	return nil
+	return matchCnt, nil
 }
