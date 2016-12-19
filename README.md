@@ -32,7 +32,7 @@ Usage:
     -h    Show help/usage
 
     -H    Prints the file name followed by a ':' and then the matching content.  This is
-          the default behavior is matches are performed against more than one file.
+          the default behavior when matches are performed against more than one file.
 
     -n    Prints the line number of the match followed by a ':' and then the matching content.
           If the file name is also printed, the line number information is printed after
