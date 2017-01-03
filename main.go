@@ -4,6 +4,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 )
@@ -16,7 +17,7 @@ func main() {
 	pat := os.Args[1]
 	file := os.Args[2]
 
-	cnt, err := printMatchingLines(pat, file)
+	cnt, err := printMatchingLines(os.Stdout, pat, file)
 	if err != nil {
 		fatal(2, err.Error())
 	}
@@ -33,7 +34,7 @@ func fatal(exitVal int, msg string, args ...interface{}) {
 	os.Exit(exitVal)
 }
 
-func printMatchingLines(pat string, file string) (int, error) {
+func printMatchingLines(out io.Writer, pat string, file string) (int, error) {
 	f, err := os.Open(file)
 	if err != nil {
 		return 0, err
@@ -45,7 +46,7 @@ func printMatchingLines(pat string, file string) (int, error) {
 	for scan.Scan() {
 		line := scan.Text()
 		if strings.Contains(line, pat) {
-			fmt.Println(line)
+			fmt.Fprintln(out, line)
 			matchCnt++
 		}
 	}
