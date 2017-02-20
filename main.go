@@ -11,7 +11,8 @@ import (
 
 func main() {
 	if len(os.Args) < 3 {
-		fatal(2, "Usage: %s <pattern> <file>\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Usage: %s <pattern> <file>\n", os.Args[0])
+		os.Exit(2)
 	}
 
 	pat := os.Args[1]
@@ -19,7 +20,8 @@ func main() {
 
 	cnt, err := printMatchingLines(os.Stdout, pat, file)
 	if err != nil {
-		fatal(2, err.Error())
+		fmt.Fprintf(os.Stderr, err.Error())
+		os.Exit(2)
 	}
 
 	if cnt > 0 {
@@ -27,11 +29,6 @@ func main() {
 	} else {
 		os.Exit(1)
 	}
-}
-
-func fatal(exitVal int, msg string, args ...interface{}) {
-	fmt.Fprintf(os.Stderr, msg, args...)
-	os.Exit(exitVal)
 }
 
 func printMatchingLines(out io.Writer, pat string, file string) (int, error) {
